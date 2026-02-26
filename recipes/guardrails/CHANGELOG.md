@@ -1,5 +1,8 @@
 # Gradle Guard
 
+## Version 0.3.1
+* [fix]: merge `BaselineConfig`s more intelligently. Stop crashing.
+
 ## Version 0.3.0
 * [feat]: `BaselineConfig` is now fully `Comparable`.
 
