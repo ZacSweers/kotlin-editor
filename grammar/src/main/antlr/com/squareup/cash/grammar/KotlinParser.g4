@@ -71,6 +71,7 @@ namedBlock
 
 name
     : Identifier
+    | Identifier (NL* DOT Identifier)*
     ;
 
 // SECTION: classes

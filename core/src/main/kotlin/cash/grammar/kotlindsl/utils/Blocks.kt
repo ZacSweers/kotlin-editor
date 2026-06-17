@@ -23,7 +23,13 @@ public object Blocks {
     get() = name().text == BUILDSCRIPT
 
   public val NamedBlockContext.isDependencies: Boolean
-    get() = name().text == DEPENDENCIES
+    get() {
+      val name = name().text
+      // standard `dependencies {}` block
+      return name == DEPENDENCIES
+      // KMP-style dependencies block, e.g. `sourceSets.commonMain.dependencies {}`
+          || name.endsWith(DEPENDENCIES)
+    }
 
   public val NamedBlockContext.isDependencyResolutionManagement: Boolean
     get() = name().text == DEPENDENCY_RESOLUTION_MANAGEMENT
