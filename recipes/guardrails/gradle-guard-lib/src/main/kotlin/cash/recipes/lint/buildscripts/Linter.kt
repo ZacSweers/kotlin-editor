@@ -13,6 +13,7 @@ import kotlinx.coroutines.withContext
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.PathWalkOption
 import kotlin.io.path.exists
 import kotlin.io.path.fileSize
@@ -110,6 +111,7 @@ public class Linter private constructor(
    * their [relativePath]. This sequence is an expansion of [paths] that includes every explicitly included regular
    * file, along with every regular file found by recursively walking each path that is a directory.
    */
+  @OptIn(ExperimentalPathApi::class)
   private fun getBuildScripts(): Sequence<Pair<Path, Path>> {
     return paths.asSequence()
       .flatMap { path ->
