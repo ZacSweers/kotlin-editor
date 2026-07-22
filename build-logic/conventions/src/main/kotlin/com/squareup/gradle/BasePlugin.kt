@@ -9,6 +9,7 @@ import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 internal class BasePlugin(private val project: Project) {
@@ -35,6 +36,7 @@ internal class BasePlugin(private val project: Project) {
       .get()
 
     configureJvmTarget()
+    configureLanguageVersion()
     configurePublishing()
   }
 
@@ -51,6 +53,22 @@ internal class BasePlugin(private val project: Project) {
       tasks.withType(KotlinJvmCompile::class.java).configureEach { t ->
         t.compilerOptions {
           jvmTarget.set(JvmTarget.fromTarget(javaVersion.toString()))
+        }
+      }
+    }
+  }
+
+  // Target the Kotlin version our min Gradle version supports
+  // https://docs.gradle.org/current/userguide/compatibility.html#kotlin
+  private fun Project.configureLanguageVersion() {
+    val languageVersion = KotlinVersion.fromVersion(
+      versionCatalog.findVersion("kotlin-languageVersion").orElseThrow().requiredVersion
+    )
+    pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
+      tasks.withType(KotlinJvmCompile::class.java).configureEach { t ->
+        t.compilerOptions {
+          this.apiVersion.set(languageVersion)
+          this.languageVersion.set(languageVersion)
         }
       }
     }

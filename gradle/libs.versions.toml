@@ -13,6 +13,8 @@ junit-launcher = "1.14.1"
 # 2.1.21, or 2.2.21, or 2.3.0
 kotlin = "2.2.21"
 kotlin-coroutines = "1.10.2"
+# Supports Gradle 8.11+
+kotlin-languageVersion = "2.0"
 mavenPublish = "0.36.0"
 
 # https://gradleup.com/shadow/
